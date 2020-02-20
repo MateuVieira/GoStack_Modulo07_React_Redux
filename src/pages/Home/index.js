@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react';
 
 import { MdAddShoppingCart } from 'react-icons/md';
 import { formatPrice } from '../../util/format';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ProductList } from './styles';
 import api from '../../server/api';
 
 import * as CartActions from '../../store/modules/cart/actions';
 
-const Home = ({ amount, addToCartRequest }) => {
+const Home = () => {
   const [products, setProducts] = useState([]);
+  const amount = useSelector(state => state.cart.reduce((amount, product) => {
+    amount[product.id] = product.amount;
+
+    return amount;
+  }, {}));
+
+  const dispactch = useDispatch();
 
   useEffect(() => {
     const loadPorduct = async () => {
@@ -29,7 +35,7 @@ const Home = ({ amount, addToCartRequest }) => {
   }, []);
 
   const handleAddProduct = id => {
-    addToCartRequest(id);
+    dispactch(CartActions.addToCartRequest(id));
   }
 
   return (
@@ -61,15 +67,4 @@ const Home = ({ amount, addToCartRequest }) => {
 }
 
 
-const mapStateToProps = state => ({
-  amount: state.cart.reduce((amount, product) => {
-    amount[product.id] = product.amount;
-
-    return amount;
-  }, {}),
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
