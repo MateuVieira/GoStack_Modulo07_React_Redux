@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropType from 'prop-type';
 
 import { MdShoppingBasket } from 'react-icons/md';
 
@@ -7,20 +9,26 @@ import { Container, Cart } from './styles';
 
 import logo from '../../assets/image/logo.svg';
 
-export default function Header() {
+function Header({ cartSize }) {
+  console.log(cartSize);
   return (
     <Container >
-      <Link>
+      <Link to='/' >
         <img src={logo} alt="Rocktshoes" />
       </Link>
 
-      <Cart>
+      <Cart to='/cart' >
         <div>
           <strong>Meu carrinho</strong>
-          <span>0 itens</span>
+          <span>{cartSize} itens</span>
         </div>
         <MdShoppingBasket size={36} color="#FFF" />
       </Cart>
     </Container>
   );
 }
+
+export default connect(state => ({
+  cartSize: state.cart.length,
+}))(Header);
+
