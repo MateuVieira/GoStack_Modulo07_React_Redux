@@ -19,7 +19,7 @@ function Cart({ cart }) {
         </thead>
         <tbody>
           {cart.map(product => (
-            <tr key={product.title} >
+            <tr key={product.id} >
               <td>
                 <img
                   src={product.image}
@@ -35,7 +35,7 @@ function Cart({ cart }) {
                   <button type="button" >
                     <MdRemoveCircleOutline size={20} color="#7159c1" />
                   </button>
-                  <input type="number" readOnly value={2} />
+                  <input type="number" readOnly value={product.amount} />
                   <button type="button" >
                     <MdAddCircleOutline size={20} color="#7159c1" />
                   </button>
