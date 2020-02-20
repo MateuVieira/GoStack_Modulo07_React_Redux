@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropType from 'prop-type';
 
 import { MdShoppingBasket } from 'react-icons/md';
 
